@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>IRIS Assistant</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f0f2f5;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    padding: 30px 15px;
+  }
+  .chat-container {
+    width: 100%;
+    max-width: 480px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    overflow: hidden;
+  }
+  .chat-header {
+    background: #d34a2f;
+    color: white;
+    padding: 18px 20px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .chat-header span {
+    display: block;
+    font-size: 13px;
+    font-weight: 400;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .message {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    line-height: 1.4;
+    font-size: 14px;
+    white-space: pre-wrap;
+  }
+  .message.user {
+    align-self: flex-end;
+    background: #d34a2f;
+    color: white;
+    border-bottom-right-radius: 4px;
+  }
+  .message.bot {
+    align-self: flex-start;
+    background: #f0f0f0;
+    color: #222;
+    border-bottom-left-radius: 4px;
+  }
+  .message.typing {
+    color: #999;
+    font-style: italic;
+  }
+  .chat-input {
+    display: flex;
+    border-top: 1px solid #eee;
+    padding: 10px;
+    gap: 8px;
+  }
+  .chat-input input {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 10px 16px;
+    font-size: 14px;
+    outline: none;
+  }
+  .chat-input input:focus {
+    border-color: #d34a2f;
+  }
+  .chat-input button {
+    background: #d34a2f;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .chat-input button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+</style>
+</head>
+<body>
+
+<div class="chat-container">
+  <div class="chat-header">
+    IRIS Assistant
+    <span>Questions sur nos produits - francais et anglais</span>
+  </div>
+  <div class="chat-messages" id="messages"></div>
+  <div class="chat-input">
+    <input type="text" id="input" placeholder="Posez votre question..." autocomplete="off">
+    <button id="sendBtn">Envoyer</button>
+  </div>
+</div>
+
+<script>
+  // Change this if your backend runs on a different port
+  const API_URL = "http://localhost:8000/chat";
+
+  const messagesEl = document.getElementById("messages");
+  const inputEl = document.getElementById("input");
+  const sendBtn = document.getElementById("sendBtn");
+  const conversationHistory = [];  // {role: "user"|"assistant", content: "..."}
+
+  function addMessage(text, sender) {
+    const div = document.createElement("div");
+    div.className = "message " + sender;
+    div.textContent = text;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return div;
+  }
+
+  async function sendMessage() {
+    const text = inputEl.value.trim();
+    if (!text) return;
+
+    addMessage(text, "user");
+    conversationHistory.push({ role: "user", content: text });
+    inputEl.value = "";
+    sendBtn.disabled = true;
+
+    const typingEl = addMessage("...", "bot typing");
+
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text, history: conversationHistory }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Server error: " + response.status);
+      }
+
+      const data = await response.json();
+      typingEl.textContent = data.reply;
+      typingEl.classList.remove("typing");
+      conversationHistory.push({ role: "assistant", content: data.reply });
+    } catch (err) {
+      typingEl.textContent = "Erreur de connexion au serveur. Verifiez que l'API tourne bien sur localhost:8000.";
+      typingEl.classList.remove("typing");
+      console.error(err);
+    }
+
+    sendBtn.disabled = false;
+    inputEl.focus();
+  }
+
+  sendBtn.addEventListener("click", sendMessage);
+  inputEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") sendMessage();
+  });
+
+  addMessage("Bonjour ! Comment puis-je vous aider aujourd'hui ?", "bot");
+</script>
+
+</body>
+</html>

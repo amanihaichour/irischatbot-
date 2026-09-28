@@ -1,0 +1,12 @@
+.env
+.DS_Store
+__pycache__/
+*.pyc
+venv/
+.venv/
+chroma_db/
+data/chat_logs.db
+data/chat_logs_export.csv
+data/electronics.csv
+src/archive/
+data/archive/

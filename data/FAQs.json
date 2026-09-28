@@ -1,0 +1,42 @@
+[
+  {
+    "question": "Quelle est la duree de garantie sur vos produits?",
+    "answer": "La plupart de nos produits electroniques beneficient d'une garantie de 12 a 24 mois selon la categorie. La duree exacte est indiquee sur la fiche produit au moment de l'achat."
+  },
+  {
+    "question": "Comment puis-je suivre ma commande?",
+    "answer": "Un numero de suivi vous est envoye par email des que votre commande est expediee. Vous pouvez l'utiliser sur le site du transporteur pour voir l'etat de la livraison en temps reel."
+  },
+  {
+    "question": "Quels sont les delais de livraison?",
+    "answer": "Les delais de livraison standard sont generalement de 3 a 7 jours ouvrables, selon votre wilaya et la disponibilite du produit."
+  },
+  {
+    "question": "Puis-je retourner un produit si je change d'avis?",
+    "answer": "Oui, vous disposez de 7 jours apres reception pour retourner un produit non utilise, dans son emballage d'origine, pour un remboursement ou un echange."
+  },
+  {
+    "question": "Que faire si mon produit arrive endommage ou defectueux?",
+    "answer": "Contactez notre service client avec des photos du produit et de l'emballage des que possible. Nous organiserons un echange ou un remboursement selon la situation."
+  },
+  {
+    "question": "Quels moyens de paiement acceptez-vous?",
+    "answer": "Nous acceptons le paiement a la livraison, ainsi que les principales cartes bancaires et virements selon les options disponibles au moment de votre commande."
+  },
+  {
+    "question": "Comment puis-je contacter le service client?",
+    "answer": "Vous pouvez nous contacter via ce chat, par email, ou par telephone durant les heures d'ouverture. Nos coordonnees completes sont disponibles sur la page Contact du site."
+  },
+  {
+    "question": "Proposez-vous une installation ou un service apres-vente?",
+    "answer": "Selon le produit, un service d'installation ou d'assistance technique peut etre disponible. N'hesitez pas a demander pour le produit qui vous interesse specifiquement."
+  },
+  {
+    "question": "Puis-je modifier ou annuler ma commande apres l'avoir passee?",
+    "answer": "Une modification ou annulation est possible tant que la commande n'a pas encore ete expediee. Contactez le service client rapidement pour faire la demande."
+  },
+  {
+    "question": "Les prix affiches incluent-ils la livraison?",
+    "answer": "Le prix affiche correspond au produit seul. Les frais de livraison sont calcules separement selon votre localisation et affiches avant la confirmation de commande."
+  }
+]
